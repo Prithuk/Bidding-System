@@ -5,11 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="product")
+@Table(name = "tbl_product")
 public class Product extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -17,10 +18,11 @@ public class Product extends AbstractEntity {
 	private Long price;
 	private String descriptions;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "products", joinColumns = {
-			@JoinColumn(name = "product_id", referencedColumnName = "id") }, inverseJoinColumns = {
-					@JoinColumn(name = "user_id", referencedColumnName = "id") })
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+//	@JoinTable(name = "tbl_product_uID_pid", joinColumns = {
+//			@JoinColumn(name = "product_id", referencedColumnName = "id") }, inverseJoinColumns = {
+//					@JoinColumn(name = "user_id", referencedColumnName = "id") })
+	@JoinColumn(name = "user_id",referencedColumnName = "id")
 	private User user;
 
 	public String getName() {

@@ -50,11 +50,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin().disable()
 			.httpBasic().and()
 			.authorizeRequests()
+			.antMatchers("/api/v1/products/add","/h2-console/**").permitAll()
 				.antMatchers("/findAll").hasAnyRole("USER")
 				.antMatchers("/api/v1/users/add", "/api/v1/users/authenticate", "/h2-console/**")
-					.permitAll()
+				.permitAll()
 				.anyRequest().authenticated().and()
 			.headers().frameOptions().sameOrigin().and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
+	
+	
+//	 @Override
+//	    protected void configure(HttpSecurity http) throws Exception {
+//	        http.csrf().disable()
+//	                .formLogin().disable()
+//	                .httpBasic().and()
+//	                .authorizeRequests().antMatchers("/add").hasRole("ADMIN")
+//	                    .antMatchers("/findAll").hasAnyRole("USER", "ADMIN")
+//	                    .antMatchers("/authenticate", "/h2-console/**").permitAll()
+//	                    .anyRequest().authenticated().and()
+//	                .headers().frameOptions().sameOrigin().and()
+//	                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//	    }
 }
