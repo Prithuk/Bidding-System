@@ -32,13 +32,14 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	// for authentication
+
 	@GetMapping("/authenticate")
-	public ResponseEntity<LoginDto> authenticate(Authentication authentication) {
+	public ResponseEntity<LoginDto> authenticate(Authentication authentication) throws Exception {
 		String name = authentication.getName();
 		User user = userService.findByName(name);
 		LoginDto loginDto = LoginDto.builder().id(user.getId()).name(user.getName())
-				.roles(user.getRoles().stream().map(Role::getRole).collect(Collectors.toSet())).build();
+				.roles(user.getRoles().stream().map(Role::getRole).collect(Collectors.toSet())).build(); 
+				
 		return new ResponseEntity<>(loginDto, HttpStatus.OK);
 	}
 
@@ -48,7 +49,6 @@ public class UserController {
 		return new ResponseEntity<>(userList, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping("/add")
 	public ResponseEntity<User> createUser(@RequestBody User user) throws Exception {
 		return new ResponseEntity<>(userService.registerUser(user), HttpStatus.OK);

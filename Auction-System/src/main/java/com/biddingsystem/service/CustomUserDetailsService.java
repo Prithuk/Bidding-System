@@ -20,7 +20,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("User does not exist with name:" + username);
 		}
-		return User.builder().username(user.getName()).password(user.getPassword()).authorities(
+		return User.builder()
+				.username(user.getName())
+				.password(user.getPassword()).authorities(
 				user.getRoles().
 				stream().
 				map(role -> "ROLE_" + role.getRole()).toList().toArray(new String[] {}))

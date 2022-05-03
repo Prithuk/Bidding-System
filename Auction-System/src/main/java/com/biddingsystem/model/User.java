@@ -3,6 +3,7 @@ package com.biddingsystem.model;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -11,18 +12,21 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "tbl_user")
 public class User extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
+	
+	@Column(name = "username")
 	private String name;
 	private Long phone_number;
 	private String email;
+	@Column(name = "password")
 	private String password;
 	private String address;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "user_roles", joinColumns = {
+	@JoinTable(name = "tbl_user_roles", joinColumns = {
 			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
 					@JoinColumn(name = "role_id", referencedColumnName = "id") })
 	private Set<Role> roles;
