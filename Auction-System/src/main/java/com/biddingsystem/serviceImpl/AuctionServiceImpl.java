@@ -1,7 +1,5 @@
 package com.biddingsystem.serviceImpl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +19,6 @@ public class AuctionServiceImpl implements AuctionService {
 	@Override
 	public Auction getByid(Long id) throws Exception {
 		return auctionRepository.findById(id).get();
-	}
-
-	@Override
-	public Auction addNewAuction(Auction auction) throws Exception {
-		auction.setUser(new HashSet<>());
-		return auctionRepository.save(auction);
 	}
 
 	@Override
@@ -55,6 +47,11 @@ public class AuctionServiceImpl implements AuctionService {
 	@Override
 	public List<Auction> getAllAuctionList() throws Exception {
 		return auctionRepository.findAll();
+	}
+
+	@Override
+	public Auction addNewAuction(Auction auction) throws Exception {
+		return auctionRepository.save(auction);
 	}
 
 }

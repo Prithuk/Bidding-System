@@ -1,25 +1,30 @@
 package com.biddingsystem.model;
 
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-@Table(name = "bidding_table")
+@Table(name = "tbl_bidding")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Auction extends AbstractEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "product_id", referencedColumnName = "id")
 	private Product product;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<User> user;
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User user;
+
+	private Long bidPrice;
 
 	public Product getProduct() {
 		return product;
@@ -29,12 +34,20 @@ public class Auction extends AbstractEntity {
 		this.product = product;
 	}
 
-	public Set<User> getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setUser(Set<User> user) {
+	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Long getBidPrice() {
+		return bidPrice;
+	}
+
+	public void setBidPrice(Long bidPrice) {
+		this.bidPrice = bidPrice;
 	}
 
 }

@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin().disable()
 			.httpBasic().and()
 			.authorizeRequests()
+			.antMatchers("/api/v1/auction","/h2-console/**").permitAll()
 			.antMatchers("/api/v1/products/add","/h2-console/**").permitAll()
 				.antMatchers("/findAll").hasAnyRole("USER")
 				.antMatchers("/api/v1/users/add", "/api/v1/users/authenticate", "/h2-console/**")
